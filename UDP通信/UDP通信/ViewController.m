@@ -4,10 +4,10 @@
 //
 //  Created by shinetech on 2016/12/28.
 //  Copyright © 2016年 shinetech. All rights reserved.
-//
+//  https://github.com/flycl/Test_DataAPI.git
 
 #import "ViewController.h"
-
+#import "SocketNet_API.h"
 #import "AsyncUdpSocket.h"//UDP库
 
 
@@ -32,9 +32,7 @@
     [self createBtn];
     
     [self createSocket];
-    
-    
-  }
+}
 
 -(void)createBtn{
     UIButton *sendBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 250, self.view.bounds.size.width, 40)];
@@ -45,7 +43,8 @@
 }
 
 -(void)createSocket{
-    //接收端Socket  发送端Socket
+    //接收端 Socket
+    //发送端 Socket
     _recvSocket = [[AsyncUdpSocket alloc]initWithDelegate:self];
     //绑定端口
     [_recvSocket bindToPort:10034 error:nil];
@@ -53,20 +52,22 @@
     [_recvSocket receiveWithTimeout:-1 tag:100];
 }
 -(void)sendDataBtn{
+    //创建一个包 NSData
     NSMutableData *tempData = [NSMutableData data];
     //登陆类型 0x01:单台车辆监控用户登陆
     Byte *loginTypeByte = (Byte *)[self intToByteArray:0x01  Len:1];
     //Bytes 添加到 Data
     [tempData  appendBytes:loginTypeByte length:1];
-    //添加到NSData 后释放 Byte.
-    if (loginTypeByte){//释放
-        free(loginTypeByte);
+    //添加到NSData 后释放 Byte. 
+    if (loginTypeByte){
+        // 释放
         // NSLog(@"free - appdelegate - loginTypeByte - 2");
+        free(loginTypeByte);
     }
-    
+   
     NSString *username = [NSString stringWithFormat:@"%@ %@",[@"蓝"  stringByReplacingOccurrencesOfString:@"色" withString:@""],@"宁测试"];
     //NSString *username = [NSString stringWithFormat:@"%@",@"13620021079"];
-
+    
     NSLog(@"发送内容 %@",username);
     //字符串转
     [tempData  appendData:[self packageConvertFromNSString:username]];
@@ -78,7 +79,7 @@
     NSLog(@"发出的Byte包 - %@",converData);
     //发送数据 
     //测试 发送内容
-    
+   
     BOOL res = [_recvSocket sendData:converData toHost:@"211.139.198.78" port:10034 withTimeout:-1 tag:20];
     if (res){
         NSLog(@"发送成功");
@@ -97,12 +98,11 @@
 
 //didReceiveData
 - (BOOL)onUdpSocket:(AsyncUdpSocket *)sock didReceiveData:(NSData *)data withTag:(long)tag fromHost:(NSString *)host port:(UInt16)port{
-    NSLog(@"接收-数据完成");
+    //NSLog(@"接收-数据完成");
     //去帧头、帧尾－》去转义处理－》校验数据包长度  validatePackage
-    NSLog(@"[self validatePackage:data]%@",[self validatePackage:data]);
+    //NSLog(@"[self validatePackage:data]%@",[self validatePackage:data]);
     //提取协议内容－》按协议处理  checkProtrol:
     [self checkProtrol:[self validatePackage:data]];
-    
 //    timeoutBo = kno;
 //    logoutBo = kno;
 //    [self.udpSocket receiveWithTimeout:-1 tag:0];
@@ -176,7 +176,7 @@
     for (int i = 0 ; i< bytesLength +4 ; i++)
     {
         /**
-         *  发送时，在帧头7EH和帧尾7FH之间的数据出现的7DH、7EH、7FH分别与20H异或，
+         *  发送时，在帧头7EH和帧尾7FH之间的数据出现的7DH、7EH、7FH分别与20H异或， 
          *  变成（5DH、5EH、5FH）再在前加7DH，如一个字节是7DH，经过转义后变为7DH，5DH。
          */
         
@@ -543,6 +543,7 @@
     packageBytes++;
     NSLog(@"--3--%d",loginType);
     NSString *username = [[NSString  alloc] initWithBytes:packageBytes length:userNameLong encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
+    
 //    NSLog(@"<----username--->%@",username);
 //    NSLog(@"--4--%d",loginType);
     packageBytes += userNameLong;
@@ -569,7 +570,35 @@
     
     return  [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:loginType],@"loginType", username,@"username",[NSNumber numberWithInt:loginResult],@"loginResult", infoData,@"loginInfo", nil];
 }
-
+-(void)dt{
+    //
+    //
+    NSMutableData *data1, *data2;
+    
+    NSString *firstString = @"ABCD";
+    
+    NSString *secondString = @"EFGH";
+    
+    const char *utfFirstString = [firstString UTF8String];
+    
+    const char *utfSecondString = [secondString UTF8String];
+    
+    unsigned char *aBuffer;
+    
+    unsigned len;
+    
+    data1 = [NSMutableData dataWithBytes:utfFirstString length:strlen(utfFirstString)];
+    
+    data2 = [NSMutableData dataWithBytes:utfSecondString length:strlen(utfSecondString)];
+    
+    len = [data2 length];
+    
+    aBuffer = malloc(len);
+    
+    [data2 getBytes:aBuffer length:[data2 length]];
+    
+    [data1 appendBytes:aBuffer length:len];
+}
 
 
 
