@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2414CECE1F05006D008C338F /* RecvSocketNet_API.m in Sources */ = {isa = PBXBuildFile; fileRef = 2414CECD1F05006D008C338F /* RecvSocketNet_API.m */; };
 		241BE3881E136B410056CD8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 241BE3871E136B410056CD8F /* main.m */; };
 		241BE38B1E136B410056CD8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 241BE38A1E136B410056CD8F /* AppDelegate.m */; };
 		241BE38E1E136B410056CD8F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241BE38D1E136B410056CD8F /* ViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2414CECC1F05006D008C338F /* RecvSocketNet_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvSocketNet_API.h; sourceTree = "<group>"; };
+		2414CECD1F05006D008C338F /* RecvSocketNet_API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecvSocketNet_API.m; sourceTree = "<group>"; };
 		241BE3831E136B410056CD8F /* UDP通信.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UDP通信.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		241BE3871E136B410056CD8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		241BE3891E136B410056CD8F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,6 +51,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2414CECF1F05007E008C338F /* 解包 */ = {
+			isa = PBXGroup;
+			children = (
+				2414CECC1F05006D008C338F /* RecvSocketNet_API.h */,
+				2414CECD1F05006D008C338F /* RecvSocketNet_API.m */,
+			);
+			name = "解包";
+			sourceTree = "<group>";
+		};
+		2414CED01F05008A008C338F /* 发包 */ = {
+			isa = PBXGroup;
+			children = (
+				24B116FB1F010ED6008F5B50 /* SocketNet_API.h */,
+				24B116FC1F010ED6008F5B50 /* SocketNet_API.m */,
+			);
+			name = "发包";
+			sourceTree = "<group>";
+		};
 		241BE37A1E136B410056CD8F = {
 			isa = PBXGroup;
 			children = (
@@ -72,8 +93,8 @@
 				243B9EA41E54402900DC0656 /* Main */,
 				241BE38C1E136B410056CD8F /* ViewController.h */,
 				241BE38D1E136B410056CD8F /* ViewController.m */,
-				24B116FB1F010ED6008F5B50 /* SocketNet_API.h */,
-				24B116FC1F010ED6008F5B50 /* SocketNet_API.m */,
+				2414CED01F05008A008C338F /* 发包 */,
+				2414CECF1F05007E008C338F /* 解包 */,
 				24C1B4CD1EF38E55009F442A /* 网络请求 */,
 				241BE3921E136B410056CD8F /* Assets.xcassets */,
 				241BE3941E136B410056CD8F /* LaunchScreen.storyboard */,
@@ -204,6 +225,7 @@
 				241BE38B1E136B410056CD8F /* AppDelegate.m in Sources */,
 				241BE3881E136B410056CD8F /* main.m in Sources */,
 				241BE39F1E136D240056CD8F /* AsyncUdpSocket.m in Sources */,
+				2414CECE1F05006D008C338F /* RecvSocketNet_API.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
